@@ -55,7 +55,8 @@ class Store:
                 return False
             self._seen_report_ids.add(key)
             series = self._points.setdefault(point.device_id, [])
-            idx = bisect.bisect_left([p.timestamp for p in series], point.timestamp)
+            # 相同时间戳按到达顺序排在后面：迟到/同时刻数据里以后到者为“最新”。
+            idx = bisect.bisect_right([p.timestamp for p in series], point.timestamp)
             series.insert(idx, point)
             return True
 
