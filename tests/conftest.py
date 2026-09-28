@@ -13,6 +13,11 @@ from app.store import Store
 
 logger = logging.getLogger("power_budget_tests")
 logger.setLevel(logging.INFO)
+if not logger.handlers:
+    _h = logging.StreamHandler()
+    _h.setFormatter(logging.Formatter("%(message)s"))
+    logger.addHandler(_h)
+logger.propagate = False
 
 T0 = datetime(2026, 9, 28, 12, 0, 0, tzinfo=timezone.utc)
 TOKEN = "secret-token"
